@@ -1,12 +1,9 @@
-package pl.allegro.umk.crazybill;
+package pl.allegro.umk.crazybill.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by jakub.westfalewski on 22/11/16.
- */
 public class Bill {
     private List<BillPosition> positions;
 
