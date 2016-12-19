@@ -1,24 +1,35 @@
 package pl.allegro.umk.crazybill;
 
-import java.util.HashMap;
+import pl.allegro.umk.crazybill.domain.Bill;
+import pl.allegro.umk.crazybill.domain.BillPosition;
+import pl.allegro.umk.crazybill.domain.BillResult;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BillCalculator {
     public BillResult calculate(Bill bill) {
 
-        HashMap<String, Double> resultsPerPerson = new HashMap<>();
+        Map<String, Double> resultsPerPerson = new LinkedHashMap<>();
 
         for (BillPosition position : bill.getPositions()) {
             double pricePerPerson = position.getPrice() / position.getPersons().size();
 
             for (String person : position.getPersons()) {
-                if (resultsPerPerson.containsKey(person)) {
-                    resultsPerPerson.put(person, pricePerPerson + resultsPerPerson.get(person));
-                } else {
-                    resultsPerPerson.put(person, pricePerPerson);
-                }
+                double priceForPerson = calculatePriceForPerson(resultsPerPerson, pricePerPerson, person);
+                resultsPerPerson.put(person, priceForPerson);
             }
         }
 
         return new BillResult(resultsPerPerson);
+    }
+
+    private double calculatePriceForPerson(Map<String, Double> resultsPerPerson, double pricePerPerson, String person) {
+        double price = pricePerPerson;
+
+        if (resultsPerPerson.containsKey(person)) {
+            price += resultsPerPerson.get(person);
+        }
+        return price;
     }
 }

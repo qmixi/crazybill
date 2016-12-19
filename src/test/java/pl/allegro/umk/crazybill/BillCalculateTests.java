@@ -1,8 +1,10 @@
 package pl.allegro.umk.crazybill;
 
 import org.junit.Test;
+import pl.allegro.umk.crazybill.domain.Bill;
+import pl.allegro.umk.crazybill.domain.BillPosition;
+import pl.allegro.umk.crazybill.domain.BillResult;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class BillCalculateTests {
 
         // then
         assertThat(result.getPersonsCount()).isEqualTo(1);
-        assertThat(result.getPerson("Jarek")).isEqualTo(20.0);
+        assertThat(result.getPriceForPerson("Jarek")).isEqualTo(20.0);
     }
 
     @Test
@@ -51,8 +53,8 @@ public class BillCalculateTests {
 
         // then
         assertThat(result.getPersonsCount()).isEqualTo(2);
-        assertThat(result.getPerson("Jarek")).isEqualTo(11);
-        assertThat(result.getPerson("Michal")).isEqualTo(15);
+        assertThat(result.getPriceForPerson("Jarek")).isEqualTo(11);
+        assertThat(result.getPriceForPerson("Michal")).isEqualTo(15);
     }
 
     @Test
@@ -67,7 +69,7 @@ public class BillCalculateTests {
 
         // then
         assertThat(result.getPersonsCount()).isEqualTo(2);
-        assertThat(result.getPerson("Jarek")).isEqualTo(11);
-        assertThat(result.getPerson("Michal")).isEqualTo(15);
+        assertThat(result.getPriceForPerson("Jarek")).isEqualTo(11);
+        assertThat(result.getPriceForPerson("Michal")).isEqualTo(15);
     }
 }
