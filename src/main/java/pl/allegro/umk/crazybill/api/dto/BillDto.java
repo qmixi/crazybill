@@ -54,4 +54,9 @@ public class BillDto {
         result = 31 * result + (positions != null ? positions.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return String.format("BillDto{id='%s', name='%s', positions=%s}", id, name, positions);
+    }
 }
