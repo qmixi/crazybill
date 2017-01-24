@@ -21,7 +21,7 @@ public class BillCalculateTests {
         List<BillPosition> positions = new ArrayList();
         positions.add(new BillPosition("Pizza", 20.0, pizzaPersons));
 
-        Bill bill = new Bill(positions);
+        Bill bill = new Bill("dummy_id", "dummy_name", positions);
 
         // when
         BillResult result = new BillCalculator().calculate(bill);
@@ -46,7 +46,7 @@ public class BillCalculateTests {
 
         positions.add(new BillPosition("Cola", 4, colaPersons));
 
-        Bill bill = new Bill(positions);
+        Bill bill = new Bill("dummy_id", "dummy_name", positions);
 
         // when
         BillResult result = new BillCalculator().calculate(bill);

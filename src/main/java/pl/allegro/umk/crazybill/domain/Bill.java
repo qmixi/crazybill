@@ -1,18 +1,52 @@
 package pl.allegro.umk.crazybill.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import pl.allegro.umk.crazybill.api.dto.BillDto;
+import pl.allegro.umk.crazybill.api.dto.PositionDto;
 
+import java.util.*;
+
+@Document(collection = "bills")
 public class Bill {
+    @Id
+    private String id;
+    private String name;
     private List<BillPosition> positions;
 
-    public Bill(List<BillPosition> positions) {
+    public Bill(String id, String name, List<BillPosition> positions) {
+        this.id = id;
+        this.name = name;
         this.positions = positions;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<BillPosition> getPositions() {
         return positions;
+    }
+
+    public static Bill fromDto(BillDto billDto) {
+        List<BillPosition> positions = new ArrayList<>();
+        for (PositionDto positionDto: billDto.getPositions()) {
+            positions.add(BillPosition.fromDto(positionDto));
+        }
+
+        return new Bill(UUID.randomUUID().toString(), billDto.getName(), positions);
+    }
+
+    public BillDto toDto() {
+        List<PositionDto> billPositions = new ArrayList<>();
+        for (BillPosition position: positions) {
+            billPositions.add(position.toDto());
+        }
+        return new BillDto(id, name, billPositions);
     }
 
     public static BillBuilder builder() {
@@ -20,6 +54,8 @@ public class Bill {
     }
 
     public static class BillBuilder {
+        private String id;
+        private String name;
         private List<BillPosition> positions = new ArrayList<>();
 
         public BillPositionBuilder paidFor(String name, double price) {
@@ -27,7 +63,7 @@ public class Bill {
         }
 
         public Bill build() {
-            return new Bill(positions);
+            return new Bill(id, name, positions);
         }
 
         public class BillPositionBuilder {
@@ -42,8 +78,18 @@ public class Bill {
             }
 
             public BillBuilder by(String... persons) {
-                return billBuilder.withPosition(new BillPosition(name, price, Arrays.asList(persons)));
+                return billBuilder.withId(id).withName(name).withPosition(new BillPosition(name, price, Arrays.asList(persons)));
             }
+        }
+
+        private BillBuilder withId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        private BillBuilder withName(String name) {
+            this.name = name;
+            return this;
         }
 
         private BillBuilder withPosition(BillPosition billPosition) {

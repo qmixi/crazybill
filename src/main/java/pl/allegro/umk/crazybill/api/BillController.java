@@ -1,6 +1,7 @@
 package pl.allegro.umk.crazybill.api;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,17 +9,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.allegro.umk.crazybill.api.dto.BillDto;
+import pl.allegro.umk.crazybill.api.dto.PersonDto;
+import pl.allegro.umk.crazybill.api.dto.PositionDto;
+import pl.allegro.umk.crazybill.domain.Bill;
+import pl.allegro.umk.crazybill.domain.BillPosition;
+import pl.allegro.umk.crazybill.repository.BillsRepository;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class BillController {
 
-    private final Map<String, BillDto> bills = new ConcurrentHashMap<>();
+    private final BillsRepository billsRepository;
+
+    @Autowired
+    public BillController(BillsRepository billsRepository) {
+        this.billsRepository = billsRepository;
+    }
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -26,10 +36,13 @@ public class BillController {
             produces = "application/json"
     )
     public BillDto getBill(@PathVariable String billId) {
-        if (!bills.containsKey(billId)) {
+
+        Bill bill = billsRepository.findOne(billId);
+        if (Objects.isNull(bill)) {
             throw new BillNotFoundException();
         }
-        return bills.get(billId);
+
+        return bill.toDto();
     }
 
     @RequestMapping(
@@ -38,10 +51,9 @@ public class BillController {
             consumes = "application/json"
     )
     public ResponseEntity createBill(@RequestBody BillDto billDto) throws URISyntaxException {
-        String billId = UUID.randomUUID().toString();
-
-        bills.put(billId, new BillDto(billId, billDto.getName(), billDto.getPositions()));
-        return ResponseEntity.created(new URI("/bills/" + billId)).build();
+        Bill bill = Bill.fromDto(billDto);
+        billsRepository.save(bill);
+        return ResponseEntity.created(new URI("/bills/" + bill.getId())).build();
     }
 
     @RequestMapping(
@@ -49,6 +61,6 @@ public class BillController {
             path = "/bills/{billId}"
     )
     public void deleteBill(@PathVariable String billId) {
-        bills.remove(billId);
+        billsRepository.delete(billId);
     }
 }

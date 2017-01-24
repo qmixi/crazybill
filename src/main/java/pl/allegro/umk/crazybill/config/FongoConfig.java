@@ -5,9 +5,10 @@ import com.mongodb.Mongo;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import pl.allegro.umk.crazybill.repository.BillsRepository;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = {})
+@EnableMongoRepositories(basePackageClasses = {BillsRepository.class})
 public class FongoConfig extends AbstractMongoConfiguration {
 	private static final String MONGO_DATABASE = "bills";
 
