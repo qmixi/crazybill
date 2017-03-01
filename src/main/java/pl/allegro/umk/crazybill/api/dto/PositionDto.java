@@ -1,5 +1,8 @@
 package pl.allegro.umk.crazybill.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class PositionDto {
@@ -8,7 +11,11 @@ public class PositionDto {
     private final double price;
     private final List<PersonDto> persons;
 
-    public PositionDto(String name, double price, List<PersonDto> persons) {
+    @JsonCreator
+    public PositionDto(
+            @JsonProperty("name") String name,
+            @JsonProperty("price") double price,
+            @JsonProperty("persons") List<PersonDto> persons) {
         this.name = name;
         this.price = price;
         this.persons = persons;
