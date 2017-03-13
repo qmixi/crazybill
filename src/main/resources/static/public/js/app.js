@@ -1,6 +1,9 @@
 (function () {
     var app = document.getElementById('app');
     var form;
+    var HEADERS = {
+        'Content-Type': 'application/json'
+    };
 
     var createElement = function (tag, attributes) {
         var element = document.createElement(tag);
@@ -24,17 +27,16 @@
         ev.preventDefault();
         var data = new FormData(form);
         var json = {
-            name: data.get('name')
+            name: data.get('name'),
+            positions: []
         };
 
         fetch('/bills/', {
                 method: 'POST',
                 body: JSON.stringify(json),
-                headers: {
-                    'contentType': 'application/json'
-                }
+                headers: HEADERS
             })
-            .then(console.log)
+            .then(appendLink.bind(json))
             .catch(console.error);
     };
 
@@ -58,6 +60,16 @@
 
         appendChildren(form, [input, label, button]);
         app.appendChild(form);
+    };
+
+    var appendLink = function (response) {
+        var link = response.headers.get('location');
+        var a = createElement('a', {
+            href: link,
+            target: '_blank',
+            innerHTML: this.name
+        });
+        app.appendChild(a);
     };
 
     generateForm();
