@@ -1,5 +1,6 @@
 package pl.allegro.umk.crazybill.config;
 
+import com.github.fakemongo.Fongo;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
 	public Mongo mongo() {
-		return new MongoClient("localhost");
+		return new Fongo(MONGO_DATABASE).getMongo();
 	}
 
 	@Override

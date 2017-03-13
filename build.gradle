@@ -30,6 +30,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
-	testCompile('com.github.fakemongo:fongo:2.0.11')
+	compile('com.github.fakemongo:fongo:2.0.11')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
