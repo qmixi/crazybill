@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>crazy bill</title>
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
     <h1>Crazy Bill</h1>
-    <form action="/bills" method="post" id="new-bill">
+    <form action="/bills" method="post" id="new-bill" class="new-bill">
         <h2>Nowy rachunek</h2>
-        <input type="text" name="name" id="name"/>
-        <label for="name">Nazwa Rachunku</label>
+        <div class="field">
+            <label for="name" class="field-label">Nazwa Rachunku</label>
+            <input type="text" name="name" id="name"/>
+        </div>
+        <div id="positions"></div>
+        <span id="add-position" class="add-position">Dodaj nową pozycję</span>
         <button type="submit">Zapisz</button>
+        <i id="indicator" class="indicator">zapisuję...</i>
     </form>
+    <div id="links" class="links"></div>
     <script src="public/js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+.field {
+    padding: 10px 0;
+}
+
+.field-label {
+    display: block;
+}
+
+.links {
+    width: 500px;
+    background: antiquewhite;
+    margin-top: 10px;
+}
+
+.link {
+    display: block;
+    padding: 10px;
+    color: #339933;
+    transition: color 0.2s linear;
+}
+
+.link:hover {
+    color: lightcoral;
+}
+
+.indicator {
+    display: none;
+}
+
+.indicator.active {
+    display: inline-block;
+}
+
+.add-position {
+    color: #339933;
+    display: block;
+    cursor: pointer;
+}
+
+.new-bill {
+    background: #ccffff;
+    padding: 20px;
+    width: 500px;
+}
+
+.position label,
+.position input {
+    display: block;
+}
