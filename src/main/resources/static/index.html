@@ -6,8 +6,12 @@
 </head>
 <body>
     <h1>Crazy Bill</h1>
-    <div id="app"></div>
-
+    <form action="/bills" method="post" id="new-bill">
+        <h2>Nowy rachunek</h2>
+        <input type="text" name="name" id="name"/>
+        <label for="name">Nazwa Rachunku</label>
+        <button type="submit">Zapisz</button>
+    </form>
     <script src="public/js/app.js"></script>
 </body>
 </html>
