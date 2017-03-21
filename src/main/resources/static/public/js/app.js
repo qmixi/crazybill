@@ -2,97 +2,84 @@
     var form = document.getElementById('new-bill');
     var links = document.getElementById('links');
     var indicator = document.getElementById('indicator');
-    var addPosition = document.getElementById('add-position');
-    var positions = document.getElementById('positions');
+    var error = document.getElementById('error');
+    var submitButton = document.getElementById('submit-button');
 
     form.onsubmit = function (ev) {
+        onSubmitStart();
+
         ev.preventDefault();
         var data = new FormData(form);
         var json = {
             name: data.get('name'),
-            positions: []
+            positions: [{
+                name: data.get('product-name'),
+                price: data.get('product-price'),
+                persons: getPersons(data.get('product-persons'))
+            }]
         };
-
-        beginFetch();
 
         fetch('/bills', {
             method: 'POST',
-            body: JSON.stringify(json),
             headers: {
-                'Content-type': 'application/json'
-            }
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
         })
-        .then(addLinkToNewBill.bind(json))
-        .catch(handleError);
+            .then(addLinkToNewBill.bind(json))
     };
 
-    function createElement(tagName, attributes) {
-        var el = document.createElement(tagName);
-        for (var key in attributes) {
-            if (attributes.hasOwnProperty(key)) {
-                el[key] = attributes[key];
-            }
-        }
-        return el;
-    }
-
-    function beginFetch () {
-        indicator.classList.add('active');
-    }
-
-    function endFetch() {
-        indicator.classList.remove('active');
-    }
-
     function addLinkToNewBill (response) {
-        var link = createElement('a', {
-            href: response.headers.get('location'),
-            innerHTML: this.name,
-            target: '_blank',
-            className: 'link'
-        });
+        var location = response.headers.get('location');
+        if (!location) {
+            handleError(response);
+            return;
+        }
+
+        var link = document.createElement('a');
+        link.href = response.headers.get('location');
+        link.innerHTML = this.name;
+        link.target = '_blank';
+        link.className = 'link';
 
         links.appendChild(link);
-        endFetch();
+        onSubmitEnd();
     }
 
+    function displayError(response) {
+        error.classList.add('active');
+        error.innerHTML = response.error;
+    }
+
+    function hideError() {
+        error.classList.remove('active');
+    }
     function handleError (response) {
-        console.error(response);
-        endFetch()
+        response.json()
+            .then(displayError);
+        onSubmitEnd();
     }
 
-    function appendChildren(parent, children) {
-        for (var i = 0; i < children.length; i++) {
-            parent.appendChild(children[i]);
-        }
+    function onSubmitStart() {
+        hideError();
+        indicator.classList.add('active');
+        submitButton.disabled = true;
     }
 
-    addPosition.onclick = function () {
-        var positionsLength = document.querySelectorAll('.position').length + 1;
+    function onSubmitEnd() {
+        indicator.classList.remove('active');
+        submitButton.disabled = false;
+    }
 
-        var wrapper = createElement('div', {
-            className: 'position'
-        });
-        var header = createElement('h4', {
-            innerHTML: 'Produkt numer ' + positionsLength
-        });
-        var positionName = createElement('input', {
-            name: 'position-name'
-        });
-        var positionPrice = createElement('input', {
-            name: 'position-price'
-        });
-        var labelForName = createElement('label', {
-            htmlFor: 'position-name',
-            innerHTML: 'nazwa produktu'
-        });
-        var labelForPrice = createElement('label', {
-            htmlFor: 'position-price',
-            innerHTML: 'cena produktu'
-        });
+    function getPersons (persons) {
+        var personArray = persons.split(';');
+        var result = [];
 
-        appendChildren(wrapper, [header, labelForName, positionName, labelForPrice, positionPrice]);
-
-        positions.appendChild(wrapper);
+        personArray.forEach(function (person) {
+            result.push({
+                name: person
+            })
+        });
+        return result;
     }
 })();

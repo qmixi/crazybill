@@ -4,52 +4,40 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
-.field {
-    padding: 10px 0;
-}
-
-.field-label {
+.field-label,
+.field-input {
     display: block;
-}
-
-.links {
-    width: 500px;
-    background: antiquewhite;
-    margin-top: 10px;
 }
 
 .link {
     display: block;
+    color: black;
+    text-decoration: none;
+    transition: background 0.2s linear;
     padding: 10px;
-    color: #339933;
-    transition: color 0.2s linear;
 }
 
 .link:hover {
-    color: lightcoral;
+    background: #ffcccc;
 }
 
-.indicator {
-    display: none;
-}
-
-.indicator.active {
-    display: inline-block;
-}
-
-.add-position {
-    color: #339933;
-    display: block;
-    cursor: pointer;
-}
-
-.new-bill {
-    background: #ccffff;
+.card {
+    background: #ccffcc;
+    border: 1px solid #339933;
+    margin: 10px;
+    float: left;
     padding: 20px;
     width: 500px;
 }
 
-.position label,
-.position input {
-    display: block;
+.on-status-change {
+    display: none;
+}
+
+.on-status-change.active {
+    display: inline;
+}
+
+.error {
+    color: red;
 }
