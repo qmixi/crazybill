@@ -2,40 +2,34 @@
     var form = document.getElementById('new-bill');
     var links = document.getElementById('links');
     var indicator = document.getElementById('indicator');
-    var error = document.getElementById('error');
-    var submitButton = document.getElementById('submit-button');
 
     form.onsubmit = function (ev) {
-        onSubmitStart();
-
+        onSubmitBegin();
         ev.preventDefault();
         var data = new FormData(form);
+        var errorMessage = validateData(data);
+        if (errorMessage) {
+            alert(errorMessage);
+            onSubmitEnd();
+            return;
+        }
         var json = {
             name: data.get('name'),
-            positions: [{
-                name: data.get('product-name'),
-                price: data.get('product-price'),
-                persons: getPersons(data.get('product-persons'))
-            }]
+            positions: []
         };
 
         fetch('/bills', {
             method: 'POST',
+            body: JSON.stringify(json),
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(json)
+            }
         })
             .then(addLinkToNewBill.bind(json))
+            .catch(console.error)
     };
 
     function addLinkToNewBill (response) {
-        var location = response.headers.get('location');
-        if (!location) {
-            handleError(response);
-            return;
-        }
-
         var link = document.createElement('a');
         link.href = response.headers.get('location');
         link.innerHTML = this.name;
@@ -46,40 +40,20 @@
         onSubmitEnd();
     }
 
-    function displayError(response) {
-        error.classList.add('active');
-        error.innerHTML = response.error;
-    }
-
-    function hideError() {
-        error.classList.remove('active');
-    }
-    function handleError (response) {
-        response.json()
-            .then(displayError);
-        onSubmitEnd();
-    }
-
-    function onSubmitStart() {
-        hideError();
+    function onSubmitBegin() {
         indicator.classList.add('active');
-        submitButton.disabled = true;
     }
 
     function onSubmitEnd() {
         indicator.classList.remove('active');
-        submitButton.disabled = false;
     }
 
-    function getPersons (persons) {
-        var personArray = persons.split(';');
-        var result = [];
-
-        personArray.forEach(function (person) {
-            result.push({
-                name: person
-            })
-        });
-        return result;
+    function validateData(data) {
+        var name = data.get('name');
+        var message;
+        if (name.length === 0) {
+            message = 'Nazwa nie może być pusta';
+        }
+        return message;
     }
 })();

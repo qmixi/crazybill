@@ -6,30 +6,17 @@
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
-    <h1>Crazy Bill</h1>
-    <form action="/bills" method="POST" id="new-bill" class="card">
-        <h3>Nowy rachunek:</h3>
-        <div class="field">
-            <label class="field-label" for="name">Nazwa rachunku</label>
-            <input class="field-input" type="text" name="name" id="name"/>
+    <h1>Crazy bill</h1>
+    <form action="/bills" method="POST" id="new-bill">
+        <h3>Nowy rachunek</h3>
+        <div>
+            <label for="name">Nazwa rachnku</label>
+            <input type="text" name="name" id="name"/>
         </div>
-        <div class="field" id="product-1">
-            <h4>Produkt numer 1</h4>
-            <label class="field-label" for="product-name">nazwa produktu</label>
-            <input class="field-input" type="text" name="product-name" id="product-name"/>
-            <label class="field-label" for="product-price">cena produktu</label>
-            <input class="field-input" type="number" step="0.01" value="0.00" name="product-price" id="product-price"/>
-            <label class="field-label" for="product-persons">płatnicy</label>
-            <input class="field-input" type="text" name="product-persons" id="product-persons" required/>
-        </div>
-        <button type="button" id="new-product">dodaj nowy produkt</button>
-        <button type="submit" id="submit-button" class="submit-button">Zapisz</button>
-        <i class="on-status-change" id="indicator">trwa zapis...</i>
-        <i class="on-status-change error" id="error">coś poszło nie tak</i>
+        <button type="submit">Zapisz</button>
+        <i id="indicator" class="indicator">trwa zapis...</i>
     </form>
-    <div id="links" class="card">
-        <h3>Ostatnio dodane:</h3>
-    </div>
+    <div id="links"></div>
     <script src="public/js/app.js"></script>
 </body>
 </html>
