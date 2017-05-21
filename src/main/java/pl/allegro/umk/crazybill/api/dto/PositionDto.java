@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PositionDto {
 
@@ -31,5 +32,29 @@ public class PositionDto {
 
     public List<PersonDto> getPersons() {
         return persons;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PositionDto that = (PositionDto) o;
+        return Double.compare(that.price, price) == 0 &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(persons, that.persons);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, persons);
+    }
+
+    @Override
+    public String toString() {
+        return "PositionDto{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", persons=" + persons +
+                '}';
     }
 }

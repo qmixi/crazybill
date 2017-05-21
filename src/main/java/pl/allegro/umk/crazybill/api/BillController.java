@@ -14,6 +14,7 @@ import pl.allegro.umk.crazybill.api.dto.PositionDto;
 import pl.allegro.umk.crazybill.domain.Bill;
 import pl.allegro.umk.crazybill.domain.BillPosition;
 import pl.allegro.umk.crazybill.repository.BillsRepository;
+import pl.allegro.umk.crazybill.service.BillService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,10 +25,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BillController {
 
     private final BillsRepository billsRepository;
+    private final BillService billService;
 
     @Autowired
-    public BillController(BillsRepository billsRepository) {
+    public BillController(BillsRepository billsRepository, BillService billService) {
         this.billsRepository = billsRepository;
+        this.billService = billService;
     }
 
     @RequestMapping(
@@ -38,7 +41,7 @@ public class BillController {
     public BillDto getBill(@PathVariable String billId) {
 
         Bill bill = billsRepository.findOne(billId);
-        if (Objects.isNull(bill)) {
+        if (bill == null) {
             throw new BillNotFoundException();
         }
 
@@ -51,9 +54,7 @@ public class BillController {
             consumes = "application/json"
     )
     public ResponseEntity createBill(@RequestBody BillDto billDto) throws URISyntaxException {
-        Bill bill = Bill.fromDto(billDto);
-        billsRepository.save(bill);
-        return ResponseEntity.created(new URI("/bills/" + bill.getId())).build();
+        return ResponseEntity.created(new URI("/bills/" + billService.createBill(Bill.fromDto(billDto)))).build();
     }
 
     @RequestMapping(

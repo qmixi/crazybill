@@ -17,7 +17,7 @@ public class Bill {
     public Bill(String id, String name, List<BillPosition> positions) {
         this.id = id;
         this.name = name;
-        this.positions = positions;
+        this.positions = Collections.unmodifiableList(positions);
     }
 
     public String getId() {

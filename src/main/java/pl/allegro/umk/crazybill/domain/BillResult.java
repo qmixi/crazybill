@@ -1,6 +1,7 @@
 package pl.allegro.umk.crazybill.domain;
 
 import java.util.Map;
+import java.util.Set;
 
 public class BillResult {
     private final Map<String, Double> resultsPerPerson;
@@ -15,5 +16,9 @@ public class BillResult {
 
     public Double getPriceForPerson(String name) {
         return resultsPerPerson.get(name);
+    }
+
+    public Set<Map.Entry<String,Double>> getCalculatedResults() {
+        return resultsPerPerson.entrySet();
     }
 }
