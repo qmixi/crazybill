@@ -3,23 +3,14 @@ package pl.allegro.umk.crazybill.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.allegro.umk.crazybill.api.dto.BillDto;
-import pl.allegro.umk.crazybill.api.dto.PersonDto;
-import pl.allegro.umk.crazybill.api.dto.PositionDto;
 import pl.allegro.umk.crazybill.domain.Bill;
-import pl.allegro.umk.crazybill.domain.BillPosition;
 import pl.allegro.umk.crazybill.repository.BillsRepository;
 import pl.allegro.umk.crazybill.service.BillService;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class BillController {

@@ -12,7 +12,6 @@ import pl.allegro.umk.crazybill.CrazybillApplicationTests;
 import pl.allegro.umk.crazybill.api.dto.BillDto;
 import pl.allegro.umk.crazybill.api.dto.PersonDto;
 import pl.allegro.umk.crazybill.api.dto.PositionDto;
-import sun.jvm.hotspot.runtime.Threads;
 
 import javax.mail.Message;
 import java.net.URI;

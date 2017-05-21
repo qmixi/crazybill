@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -38,7 +37,7 @@ public class MailConfig {
 
 
 	@Bean
-	public JavaMailSenderImpl mailSender(Environment environment) {
+	public MailSender mailSender(Environment environment) {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		Properties mailProperties = new Properties();
 		mailProperties.put("mail.smtp.auth", auth);

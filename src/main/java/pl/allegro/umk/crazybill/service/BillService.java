@@ -11,20 +11,18 @@ import pl.allegro.umk.crazybill.BillCalculator;
 import pl.allegro.umk.crazybill.domain.Bill;
 import pl.allegro.umk.crazybill.repository.BillsRepository;
 
-import java.util.logging.Logger;
-
 @Service
 public class BillService {
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BillService.class);
 	private final BillsRepository billsRepository;
 	private final BillCalculator billCalculator;
-	private final JavaMailSenderImpl mailSender;
+	private final MailSender mailSender;
 	private final SimpleMailMessage templateMessage;
 
 	@Autowired
 	public BillService(BillsRepository billsRepository,
 					   BillCalculator billCalculator,
-					   JavaMailSenderImpl mailSender,
+					   MailSender mailSender,
 					   SimpleMailMessage templateMessage) {
 		this.billsRepository = billsRepository;
 		this.billCalculator = billCalculator;

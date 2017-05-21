@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 public abstract class CrazybillApplicationTests {
 
 	@Resource
-	public JavaMailSenderImpl mailSender;
+	public MailSender mailSender;
 
 	public TestRestTemplate restTemplate = new TestRestTemplate();
 

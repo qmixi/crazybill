@@ -19,7 +19,7 @@ public class MailTestConfig {
 
 
     @Bean
-    public JavaMailSenderImpl mailSender(Environment environment) {
+    public MailSender mailSender(Environment environment) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         Properties mailProperties = new Properties();
 
