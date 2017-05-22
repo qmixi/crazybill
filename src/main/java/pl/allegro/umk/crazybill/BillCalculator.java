@@ -1,5 +1,6 @@
 package pl.allegro.umk.crazybill;
 
+import org.springframework.stereotype.Service;
 import pl.allegro.umk.crazybill.domain.Bill;
 import pl.allegro.umk.crazybill.domain.BillPosition;
 import pl.allegro.umk.crazybill.domain.BillResult;
@@ -7,6 +8,7 @@ import pl.allegro.umk.crazybill.domain.BillResult;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Service
 public class BillCalculator {
     public BillResult calculate(Bill bill) {
 
