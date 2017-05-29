@@ -1,6 +1,5 @@
 package pl.allegro.umk.crazybill.config;
 
-import com.github.fakemongo.Fongo;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.context.annotation.Configuration;
