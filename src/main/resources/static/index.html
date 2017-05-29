@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>crazy bill</title>
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div>
+                <h1>Crazy bill</h1>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-sm-3">
+                <div class="row">
+                    <a href="" class="btn btn-default col-xs-4 col-sm-12">link 1</a>
+                    <a href="" class="btn btn-default col-xs-4 col-sm-12">link 2</a>
+                    <a href="" class="btn btn-default col-xs-4 col-sm-12">link 3</a>
+                </div>
+            </div>
+
+            <form action="/bills" method="POST" id="new-bill"  class="col-sm-9">
+                <h3>Nowy rachunek</h3>
+                <div>
+                    <label for="name">Nazwa rachnku</label>
+                    <input class="form-control" type="text" name="name" id="name"/>
+                </div>
+                <ol id="positions">
+                    <li id="position-0">
+                        <label for="position-name-0">Nazwa:</label>
+                        <input class="form-control" type="text" id="position-name-0" name="position-name-0">
+
+                        <label for="position-price-0">Cena:</label>
+                        <input class="form-control"
+                               type="number"
+                               step="0.01"
+                               min="0.01"
+                               placeholder="0.00"
+                               id="position-price-0"
+                               name="position-price-0">
+
+                        <label for="persons-0">Ludzie:</label>
+                        <input class="form-control" type="text" id="persons-0" name="persons-0">
+                    </li>
+                </ol>
+                <a href="#" id="new-position" class="btn btn-default col-xs-12 col-sm-6">dodaj nową pozycję</a>
+                <button type="submit" class="btn btn-primary pull-right col-xs-12 col-sm-6">Zapisz</button>
+                <i id="indicator" class="hide">trwa zapis...</i>
+            </form>
+        </div>
+        <div id="links"></div>
+    </div>
+    <script src="public/js/app.js"></script>
+</body>
+</html>
