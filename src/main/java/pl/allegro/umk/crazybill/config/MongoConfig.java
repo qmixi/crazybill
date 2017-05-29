@@ -22,7 +22,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
 	public Mongo mongo() {
-		return new Fongo(MONGO_DATABASE).getMongo();
+		return new MongoClient("localhost");
 	}
 
 	@Override
