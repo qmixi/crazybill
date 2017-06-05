@@ -21,4 +21,15 @@ public class BillResult {
     public Set<Map.Entry<String,Double>> getCalculatedResults() {
         return resultsPerPerson.entrySet();
     }
+
+    public Map<String, Double> getResultsPerPerson() {
+        return resultsPerPerson;
+    }
+
+    @Override
+    public String toString() {
+        return "BillResult{" +
+                "resultsPerPerson=" + resultsPerPerson +
+                '}';
+    }
 }

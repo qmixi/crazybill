@@ -27,8 +27,12 @@
             <form action="/bills" method="POST" id="new-bill"  class="col-sm-9">
                 <h3>Nowy rachunek</h3>
                 <div>
-                    <label for="name">Nazwa rachnku</label>
+                    <label for="name">Nazwa rachunku</label>
                     <input class="form-control" type="text" name="name" id="name"/>
+                </div>
+                <div>
+                    <label for="name">Płacący (email):</label>
+                    <input class="form-control" type="text" name="email" id="email"/>
                 </div>
                 <ol id="positions">
                     <li id="position-0">
@@ -53,7 +57,7 @@
                 <i id="indicator" class="hide">trwa zapis...</i>
             </form>
         </div>
-        <div id="links"></div>
+        <ul id="links"></ul>
     </div>
     <script src="public/js/app.js"></script>
 </body>

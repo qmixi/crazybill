@@ -10,16 +10,19 @@ public class BillDto {
 
     private final String id;
     private final String name;
+    private final String email;
     private final List<PositionDto> positions;
 
     @JsonCreator
     public BillDto(
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
+            @JsonProperty("email") String email,
             @JsonProperty("positions") List<PositionDto> positions
     ) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.positions = positions;
     }
 
@@ -29,6 +32,10 @@ public class BillDto {
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public List<PositionDto> getPositions() {

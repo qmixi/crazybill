@@ -1,5 +1,6 @@
 package pl.allegro.umk.crazybill.domain;
 
+import org.springframework.data.annotation.Id;
 import pl.allegro.umk.crazybill.api.dto.PersonDto;
 import pl.allegro.umk.crazybill.api.dto.PositionDto;
 
@@ -8,14 +9,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class BillPosition {
+    @Id
+    private final String id;
     private final String name;
     private final double price;
     private final List<String> persons;
 
-    public BillPosition(String name, double price, List<String> persons) {
+    public BillPosition(String name, double price, List<String> persons, String id) {
         this.name = name;
         this.price = price;
         this.persons = Collections.unmodifiableList(persons);
+        this.id = id;
     }
 
     public String getName() {
@@ -35,7 +39,7 @@ public class BillPosition {
         for (PersonDto personDto: positionDto.getPersons()){
             persons.add(personDto.getName());
         }
-        return new BillPosition(positionDto.getName(), positionDto.getPrice(), persons);
+        return new BillPosition(positionDto.getName(), positionDto.getPrice(), persons, positionDto.getId());
     }
 
     public PositionDto toDto() {
@@ -43,6 +47,6 @@ public class BillPosition {
         for (String person: persons) {
             personDtos.add(new PersonDto(person));
         }
-        return new PositionDto(name, price, personDtos);
+        return new PositionDto(id, name, price, personDtos);
     }
 }

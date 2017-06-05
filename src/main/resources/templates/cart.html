@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:text="${bill.name}"></div>
+
+<ul>
+    <li th:each="item: ${calculated}">
+    <form th:action="${url}" method="post">
+        <input type="hidden" name="cmd" value="_cart"/>
+        <input type="hidden" name="upload" value="1"/>
+        <input type="hidden" name="currency_code" th:value="${currency}"/>
+        <input type="hidden" name="business" th:value="${bill.email}"/>
+
+        <label th:text="${item.key}"></label>
+        <input type="hidden" name="item_name_1" th:value="${bill.name}"/>
+        <label th:text="${item.value}"></label>
+        <input type="hidden" name="amount_1" th:value="${#numbers.formatDecimal(item.value, 1, 2)}"/>
+        <input type="hidden" name="shipping_1" value="0"/>
+
+        <input type="submit" value="Zapłać PayPal-em"/>
+    </form>
+    </li>
+</ul>
+
+</body>
+</html>

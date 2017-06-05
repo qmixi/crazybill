@@ -17,6 +17,7 @@ import javax.mail.Message;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -36,10 +37,11 @@ public class BillEndpointTest extends CrazybillApplicationTests {
     @Test
     public void should_return_bill_by_id() throws Exception {
         //given
-        BillDto bill = new BillDto(null, "bill name", Collections.singletonList(new PositionDto("pizza", 10, Collections.singletonList(new PersonDto("user@dummy.pl")))));
+        String id = UUID.randomUUID().toString();
+        BillDto bill = new BillDto(null, "bill name", "email@domain.org", Collections.singletonList(new PositionDto(id, "pizza", 10, Collections.singletonList(new PersonDto("user@dummy.pl")))));
         URI location = restTemplate.postForLocation("http://localhost:" + port + "/bills", bill);
         String billId = location.getPath().replace("/bills/", "");
-        BillDto expectedBill = new BillDto(billId, "bill name", Collections.singletonList(new PositionDto("pizza", 10, Collections.singletonList(new PersonDto("user@dummy.pl")))));
+        BillDto expectedBill = new BillDto(billId, "bill name", "email@domain.org", Collections.singletonList(new PositionDto(id, "pizza", 10, Collections.singletonList(new PersonDto("user@dummy.pl")))));
 
         //when
         ResponseEntity<BillDto> entity = restTemplate.getForEntity("http://localhost:"+port+"/bills/" + billId, BillDto.class);
@@ -54,9 +56,9 @@ public class BillEndpointTest extends CrazybillApplicationTests {
         assertEquals("New payment", messages[0].getSubject());
         String body = GreenMailUtil.getBody(messages[0]).replaceAll("=\r?\n", "");
         assertThat(body).startsWith("Hello,");
-        assertThat(body).contains("You had a pleasure make a shopping/eating together with friends.");
-        assertThat(body).contains("You have made shopping/eating for amount: 10.000000 PLN. The bill name is: bill name. Please give back money to your friend.");
-        assertThat(body).endsWith("Yours Crazy Bill");
+        assertThat(body).contains("You had a pleasure to do shopping/eat together with friends.");
+        assertThat(body).contains("You have made shopping/eating for amount: 10.00 PLN. The bill name is: bill name. Please give back money to your friend.");
+        assertThat(body).endsWith("Yours, Crazy Bill");
     }
 
     @Test
@@ -71,7 +73,7 @@ public class BillEndpointTest extends CrazybillApplicationTests {
     @Test
     public void should_create_bill() {
         //given
-        BillDto bill = new BillDto(null, "test name", new ArrayList<>());
+        BillDto bill = new BillDto(null, "test name", "email@domain.org", new ArrayList<>());
 
         //then
         ResponseEntity<Void> entity = restTemplate.postForEntity("http://localhost:" + port + "/bills", bill, Void.class);
@@ -83,7 +85,7 @@ public class BillEndpointTest extends CrazybillApplicationTests {
     @Test
     public void should_delete_bill() {
         //given
-        BillDto bill = new BillDto(null, "bill name", new ArrayList<>());
+        BillDto bill = new BillDto(null, "bill name", "email@domain.org", new ArrayList<>());
         URI location = restTemplate.postForLocation("http://localhost:" + port + "/bills", bill);
 
         //when

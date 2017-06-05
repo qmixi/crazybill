@@ -2,10 +2,10 @@ package pl.allegro.umk.crazybill.service;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import pl.allegro.umk.crazybill.BillCalculator;
 import pl.allegro.umk.crazybill.domain.Bill;
@@ -14,6 +14,10 @@ import pl.allegro.umk.crazybill.repository.BillsRepository;
 @Service
 public class BillService {
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BillService.class);
+
+	@Value("${payments.currency}")
+	private String currency;
+
 	private final BillsRepository billsRepository;
 	private final BillCalculator billCalculator;
 	private final MailSender mailSender;
@@ -45,9 +49,9 @@ public class BillService {
 		SimpleMailMessage msg = new SimpleMailMessage(templateMessage);
 		msg.setTo(user);
 		msg.setText(String.format("Hello, \n\n" +
-				"You had a pleasure make a shopping/eating together with friends. \n" +
-				"You have made shopping/eating for amount: %f PLN. The bill name is: %s. Please give back money to your friend. \n\n" +
-				"Yours Crazy Bill", billAmount, billName));
+				"You had a pleasure to do shopping/eat together with friends. \n" +
+				"You have made shopping/eating for amount: %.2f %s. The bill name is: %s. Please give back money to your friend. \n\n" +
+				"Yours, Crazy Bill", billAmount, currency, billName));
 		try{
 			mailSender.send(msg);
 		}

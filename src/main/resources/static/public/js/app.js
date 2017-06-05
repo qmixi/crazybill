@@ -16,6 +16,7 @@
         }
         var json = {
             name: data.get('name'),
+            email: data.get('email'),
             positions: getPosition(data)
         };
 
@@ -71,7 +72,9 @@
         link.target = '_blank';
         link.className = 'link';
 
-        links.appendChild(link);
+        var wrapper = document.createElement('li');
+        wrapper.appendChild(link);
+        links.appendChild(wrapper);
         onSubmitEnd();
     }
 
@@ -85,6 +88,7 @@
 
     function validateData(data) {
         var name = data.get('name');
+        var email = data.get('email');
         var message;
         if (name.length === 0) {
             message = 'Nazwa nie może być pusta';

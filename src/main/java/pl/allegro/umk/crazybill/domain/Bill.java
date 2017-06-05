@@ -12,11 +12,13 @@ public class Bill {
     @Id
     private String id;
     private String name;
+    private String email;
     private List<BillPosition> positions;
 
-    public Bill(String id, String name, List<BillPosition> positions) {
+    public Bill(String id, String name, List<BillPosition> positions, String email) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.positions = Collections.unmodifiableList(positions);
     }
 
@@ -26,6 +28,10 @@ public class Bill {
 
     public String getName() {
         return name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public List<BillPosition> getPositions() {
@@ -38,7 +44,7 @@ public class Bill {
             positions.add(BillPosition.fromDto(positionDto));
         }
 
-        return new Bill(UUID.randomUUID().toString(), billDto.getName(), positions);
+        return new Bill(UUID.randomUUID().toString(), billDto.getName(), positions, billDto.getEmail());
     }
 
     public BillDto toDto() {
@@ -46,7 +52,7 @@ public class Bill {
         for (BillPosition position: positions) {
             billPositions.add(position.toDto());
         }
-        return new BillDto(id, name, billPositions);
+        return new BillDto(id, name, email, billPositions);
     }
 
     public static BillBuilder builder() {
@@ -56,6 +62,7 @@ public class Bill {
     public static class BillBuilder {
         private String id;
         private String name;
+        private String email;
         private List<BillPosition> positions = new ArrayList<>();
 
         public BillPositionBuilder paidFor(String name, double price) {
@@ -63,7 +70,7 @@ public class Bill {
         }
 
         public Bill build() {
-            return new Bill(id, name, positions);
+            return new Bill(id, name, positions, email);
         }
 
         public class BillPositionBuilder {
@@ -78,7 +85,10 @@ public class Bill {
             }
 
             public BillBuilder by(String... persons) {
-                return billBuilder.withId(id).withName(name).withPosition(new BillPosition(name, price, Arrays.asList(persons)));
+                return billBuilder.withId(id)
+                        .withName(name)
+                        .withEmail(email)
+                        .withPosition(new BillPosition(name, price, Arrays.asList(persons), id));
             }
         }
 
@@ -89,6 +99,11 @@ public class Bill {
 
         private BillBuilder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        private BillBuilder withEmail(String email) {
+            this.email = email;
             return this;
         }
 

@@ -24,3 +24,8 @@ MAIL_USER_NAME="user name" MAIL_PASSWORD="password=" java -jar <app.jar>
 * Writing tests
 * Code review by creating PR
 * Solve all reported comments
+
+### Documentation Links ###
+
+<a href="http://www.thymeleaf.org/" target="_blank">ThymeLeaf templates</a><br/>
+<a href="https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/cart_upload/" target="_blank">PayPal Integration</a>

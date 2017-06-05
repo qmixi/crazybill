@@ -7,6 +7,7 @@ import pl.allegro.umk.crazybill.domain.BillResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,9 +20,9 @@ public class BillCalculateTests {
         pizzaPersons.add("Jarek");
 
         List<BillPosition> positions = new ArrayList();
-        positions.add(new BillPosition("Pizza", 20.0, pizzaPersons));
+        positions.add(new BillPosition("Pizza", 20.0, pizzaPersons, UUID.randomUUID().toString()));
 
-        Bill bill = new Bill("dummy_id", "dummy_name", positions);
+        Bill bill = new Bill("dummy_id", "dummy_name", positions, "email@domain.org");
 
         // when
         BillResult result = new BillCalculator().calculate(bill);
@@ -39,14 +40,14 @@ public class BillCalculateTests {
         kebabPersons.add("Michal");
 
         List<BillPosition> positions = new ArrayList<>();
-        positions.add(new BillPosition("Kebab", 22.0, kebabPersons));
+        positions.add(new BillPosition("Kebab", 22.0, kebabPersons, UUID.randomUUID().toString()));
 
         List<String> colaPersons = new ArrayList<>();
         colaPersons.add("Michal");
 
-        positions.add(new BillPosition("Cola", 4, colaPersons));
+        positions.add(new BillPosition("Cola", 4, colaPersons, UUID.randomUUID().toString()));
 
-        Bill bill = new Bill("dummy_id", "dummy_name", positions);
+        Bill bill = new Bill("dummy_id", "dummy_name", positions, "email@domain.org");
 
         // when
         BillResult result = new BillCalculator().calculate(bill);

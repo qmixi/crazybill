@@ -8,18 +8,25 @@ import java.util.Objects;
 
 public class PositionDto {
 
+    private final String id;
     private final String name;
     private final double price;
     private final List<PersonDto> persons;
 
     @JsonCreator
     public PositionDto(
+            @JsonProperty("id") String id,
             @JsonProperty("name") String name,
             @JsonProperty("price") double price,
             @JsonProperty("persons") List<PersonDto> persons) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.persons = persons;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -40,6 +47,7 @@ public class PositionDto {
         if (o == null || getClass() != o.getClass()) return false;
         PositionDto that = (PositionDto) o;
         return Double.compare(that.price, price) == 0 &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(persons, that.persons);
     }
@@ -52,7 +60,8 @@ public class PositionDto {
     @Override
     public String toString() {
         return "PositionDto{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
                 ", persons=" + persons +
                 '}';
